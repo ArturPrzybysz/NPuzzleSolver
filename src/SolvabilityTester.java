@@ -1,8 +1,5 @@
-/**
- * Created by Artur on 2018-10-26.
- */
 class SolvabilityTester {
-    static boolean check(Board board) {
+    static boolean check(int[][] tiles) {
         return true; // TODO
     }
 }
