@@ -1,4 +1,5 @@
 public enum BoardState {
     RANDOM,
-    SOLVED
+    SOLVED,
+    CUSTOM
 }

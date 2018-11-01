@@ -2,9 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 class State {
+    private State parent = null;
     private Position zeroTilePosition;
     private int[][] tiles;
     private double distance;
+    private double cumulativeDistance = 0;
 
     State(int[][] tiles) {
         this.tiles = tiles;
@@ -18,51 +20,61 @@ class State {
         }
     }
 
-    private State(int[][] tiles, Position zeroTilePosition) {
+    private State(int[][] tiles, Position zeroTilePosition, State parent) {
+        this.parent = parent;
         this.tiles = tiles;
-        this.distance = Config.metrics.getDistance(this.tiles);
+        this.distance = Config.metrics.getDistance(tiles);
+        this.cumulativeDistance = parent.getCumulativeDistance() + distance;
+
         this.zeroTilePosition = zeroTilePosition;
     }
 
-    public int[][] getTiles() {
+    int[][] getTiles() {
         return tiles;
     }
 
-    public double getDistance() {
+    double getDistance() {
         return distance;
     }
 
-    public List<State> getAvailableStates() {
+    List<State> getAvailableStates() {
 
         List<State> states = new ArrayList<>();
-        int[][] tmpTiles = tiles.clone();
+        int[][] tmpTiles = Util.copy2DArray(tiles);
         for (int i = zeroTilePosition.x + 1; i < this.tiles.length; i++) {
             tmpTiles[i - 1][zeroTilePosition.y] = tmpTiles[i][zeroTilePosition.y];
             tmpTiles[i][zeroTilePosition.y] = 0;
-            states.add(new State(tmpTiles.clone(), new Position(i, zeroTilePosition.y)));
+            states.add(new State(Util.copy2DArray(tmpTiles), new Position(i, zeroTilePosition.y), this));
         }
 
-        tmpTiles = tiles.clone();
-        for (int i = zeroTilePosition.x - 1; i >= 0; i++) {
+        tmpTiles = Util.copy2DArray(tiles);
+        for (int i = zeroTilePosition.x - 1; i >= 0; i--) {
             tmpTiles[i + 1][zeroTilePosition.y] = tmpTiles[i][zeroTilePosition.y];
             tmpTiles[i][zeroTilePosition.y] = 0;
-            states.add(new State(tmpTiles.clone(), new Position(i, zeroTilePosition.y)));
+            states.add(new State(Util.copy2DArray(tmpTiles), new Position(i, zeroTilePosition.y), this));
         }
 
-        tmpTiles = tiles.clone();
+        tmpTiles = Util.copy2DArray(tiles);
         for (int i = zeroTilePosition.y + 1; i < this.tiles.length; i++) {
             tmpTiles[zeroTilePosition.x][i - 1] = tmpTiles[zeroTilePosition.x][i];
             tmpTiles[zeroTilePosition.x][i] = 0;
-            states.add(new State(tmpTiles.clone(), new Position(zeroTilePosition.x, i)));
+            states.add(new State(Util.copy2DArray(tmpTiles), new Position(zeroTilePosition.x, i), this));
         }
 
-        tmpTiles = tiles.clone();
-        for (int i = zeroTilePosition.y - 1; i >= 0; i++) {
+        tmpTiles = Util.copy2DArray(tiles);
+        for (int i = zeroTilePosition.y - 1; i >= 0; i--) {
             tmpTiles[zeroTilePosition.x][i + 1] = tmpTiles[zeroTilePosition.x][i];
             tmpTiles[zeroTilePosition.x][i] = 0;
-            states.add(new State(tmpTiles.clone(), new Position(zeroTilePosition.x, i)));
+            states.add(new State(Util.copy2DArray(tmpTiles), new Position(zeroTilePosition.x, i), this));
         }
         return states;
     }
 
+    State getParent() {
+        return parent;
+    }
+
+    public double getCumulativeDistance() {
+        return cumulativeDistance;
+    }
 }
