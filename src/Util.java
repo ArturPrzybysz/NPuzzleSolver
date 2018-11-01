@@ -1,7 +1,7 @@
 class Util {
-    static int[][] copy2DArray(int[][] matrix) {
-        int[][] matrixCopy = new int[matrix.length][];
-        for (int i = 0; i < matrix.length; i++)
+    static byte[][] copy2DArray(byte[][] matrix) {
+        byte[][] matrixCopy = new byte[matrix.length][];
+        for (short i = 0; i < matrix.length; i++)
             matrixCopy[i] = matrix[i].clone();
         return matrixCopy;
     }

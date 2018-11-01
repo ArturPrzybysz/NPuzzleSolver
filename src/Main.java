@@ -13,12 +13,12 @@ public class Main {
             e.printStackTrace();
         }
         System.out.print(solution.size());
-//        for (State s : solution) {
-//            Main.printTiles(s.getTiles());
-//        }
+        for (State s : solution) {
+            Main.printTiles(s.getTiles());
+        }
     }
 
-    private static void printTiles(int[][] tiles) {
+    private static void printTiles(byte[][] tiles) {
         for (int i = 0; i < tiles.length; i++) {
             for (int j = 0; j < tiles[0].length; j++) {
                 System.out.print(tiles[i][j] + " ");

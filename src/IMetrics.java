@@ -1,3 +1,3 @@
 public interface IMetrics {
-    double getDistance(int[][] tiles);
+    float getDistance(byte[][] tiles);
 }

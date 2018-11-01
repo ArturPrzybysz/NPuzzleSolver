@@ -2,12 +2,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Manhattan implements IMetrics {
-    private Map<Integer, Position> solvedPositions = new HashMap<>();
+    private Map<Byte, Position> solvedPositions = new HashMap<>();
 
-    Manhattan(int[][] solvedTiles) {
-        for (int i = 0; i < solvedTiles.length; i++) {
+    Manhattan(byte[][] solvedTiles) {
+        for (byte i = 0; i < solvedTiles.length; i++) {
             {
-                for (int j = 0; j < solvedTiles.length; j++) {
+                for (byte j = 0; j < solvedTiles.length; j++) {
                     solvedPositions.put(solvedTiles[i][j], new Position(i, j));
                 }
             }
@@ -15,11 +15,11 @@ public class Manhattan implements IMetrics {
     }
 
     @Override
-    public double getDistance(int[][] tiles) {
-        double distance = 0;
+    public float getDistance(byte[][] tiles) {
+        float distance = 0;
         Position goalPosition;
-        for (int i = 0; i < tiles.length; i++) {
-            for (int j = 0; j < tiles[0].length; j++) {
+        for (byte i = 0; i < tiles.length; i++) {
+            for (byte j = 0; j < tiles[0].length; j++) {
                 goalPosition = solvedPositions.get(tiles[i][j]);
                 distance += Math.abs(goalPosition.x - i);
                 distance += Math.abs(goalPosition.y - j);
