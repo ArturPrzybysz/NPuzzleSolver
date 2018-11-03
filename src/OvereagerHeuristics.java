@@ -1,13 +1,13 @@
 import java.util.HashMap;
 import java.util.Map;
 
-public class Manhattan implements IMetrics {
+public class OvereagerHeuristics implements IHeuristics {
     private Map<Byte, Position> solvedPositions = new HashMap<>();
 
-    Manhattan(byte[][] solvedTiles) {
+    OvereagerHeuristics(byte[][] solvedTiles) {
         for (byte i = 0; i < solvedTiles.length; i++) {
             {
-                for (byte j = 0; j < solvedTiles.length; j++) {
+                for (byte j = 0; j < solvedTiles[0].length; j++) {
                     solvedPositions.put(solvedTiles[i][j], new Position(i, j));
                 }
             }
@@ -17,12 +17,15 @@ public class Manhattan implements IMetrics {
     @Override
     public float getDistance(byte[][] tiles) {
         float distance = 0;
+        int multiplier;
         Position goalPosition;
         for (byte i = 0; i < tiles.length; i++) {
             for (byte j = 0; j < tiles[0].length; j++) {
                 goalPosition = solvedPositions.get(tiles[i][j]);
-                distance += Math.abs(goalPosition.x - i);
-                distance += Math.abs(goalPosition.y - j);
+
+                multiplier = Config.size - Math.min(i, j);
+                distance += Math.pow(multiplier * Math.abs(goalPosition.x - i), 2);
+                distance += Math.pow(multiplier * Math.abs(goalPosition.y - j), 2);
             }
         }
         return distance;

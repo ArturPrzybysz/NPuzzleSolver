@@ -1,3 +1,3 @@
-public interface IMetrics {
+public interface IHeuristics {
     float getDistance(byte[][] tiles);
 }

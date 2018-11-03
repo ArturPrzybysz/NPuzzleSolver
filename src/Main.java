@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        State initialState = new State(TileGenerator.generate(BoardState.RANDOM, 4));
+        State initialState = new State(TileGenerator.generate(BoardState.RANDOM));
         System.out.println("Initial");
         Main.printTiles(initialState.getTiles());
 
@@ -23,9 +23,9 @@ public class Main {
             for (int j = 0; j < tiles[0].length; j++) {
                 System.out.print(tiles[i][j] + " ");
             }
-            System.out.println("");
+            System.out.println();
         }
-        System.out.println("");
+        System.out.println();
 
     }
 }

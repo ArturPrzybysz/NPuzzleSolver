@@ -3,7 +3,8 @@ import java.util.List;
 import static java.lang.Math.random;
 
 class TileGenerator {
-    static byte[][] generate(BoardState boardState, int size) {
+    static byte[][] generate(BoardState boardState) {
+        int size = Config.size;
         byte[][] tiles = new byte[size][size];
         switch (boardState) {
             case CUSTOM:
@@ -29,7 +30,7 @@ class TileGenerator {
             case RANDOM:
                 List<State> states = new State(Config.solvedTiles).getAvailableStates();
                 State state = new State(states.get(0).getTiles());
-                for (int i = 0; i < 500; i++) {
+                for (int i = 0; i < 45; i++) {
                     state = state.getAvailableStates().get((byte) (random() * 10) % state.getAvailableStates().size());
                 }
                 tiles = state.getTiles();
