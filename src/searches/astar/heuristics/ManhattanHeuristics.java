@@ -1,3 +1,8 @@
+package searches.astar.heuristics;
+
+import game.Position;
+import searches.astar.heuristics.IHeuristics;
+
 import java.util.HashMap;
 import java.util.Map;
 

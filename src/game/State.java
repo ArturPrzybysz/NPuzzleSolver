@@ -1,14 +1,19 @@
+package game;
+
+import main.Config;
+import main.Util;
+
 import java.util.ArrayList;
 import java.util.List;
 
-class State {
+public class State {
     private State parent = null;
     private Position zeroTilePosition;
     private byte[][] tiles;
     private double distance;
     private double cumulativeDistance = 0;
 
-    State(byte[][] tiles) {
+    public State(byte[][] tiles) {
         this.tiles = tiles;
         this.distance = Config.metrics.getDistance(this.tiles);
         for (short i = 0; i < tiles.length; i++) {
@@ -29,15 +34,15 @@ class State {
         this.zeroTilePosition = zeroTilePosition;
     }
 
-    byte[][] getTiles() {
+    public byte[][] getTiles() {
         return tiles;
     }
 
-    double getDistance() {
+    public double getDistance() {
         return distance;
     }
 
-    List<State> getAvailableStates() {
+    public List<State> getAvailableStates() {
 
         List<State> states = new ArrayList<>();
         byte[][] tmpTiles = Util.copy2DArray(tiles);
@@ -74,11 +79,11 @@ class State {
         return states;
     }
 
-    State getParent() {
+    public State getParent() {
         return parent;
     }
 
-    double getCumulativeDistance() {
+    public double getCumulativeDistance() {
         return cumulativeDistance;
     }
 }

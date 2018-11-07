@@ -1,3 +1,10 @@
+package main;
+
+import game.BoardState;
+import game.State;
+import game.TileGenerator;
+import searches.astar.AStar;
+
 import java.util.List;
 
 public class Main {
@@ -12,6 +19,7 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        assert solution != null;
         System.out.print(solution.size());
         for (State s : solution) {
             Main.printTiles(s.getTiles());

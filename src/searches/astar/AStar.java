@@ -1,7 +1,10 @@
-import java.util.*;
+package searches.astar;
 
-class AStar {
-    static List<State> findBestPath(State initialState) throws Exception {
+import game.State;
+
+import java.util.*;
+public class AStar {
+    public static List<State> findBestPath(State initialState) throws Exception {
         Queue<State> openStates = new PriorityQueue<>((s1, s2) -> {
             if (s1.getCumulativeDistance() - s2.getCumulativeDistance() == 0) {
                 return 0;

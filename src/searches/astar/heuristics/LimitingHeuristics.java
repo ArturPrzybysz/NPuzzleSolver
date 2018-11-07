@@ -1,3 +1,8 @@
+package searches.astar.heuristics;
+
+import game.Position;
+import searches.astar.heuristics.IHeuristics;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +21,7 @@ public class LimitingHeuristics implements IHeuristics {
         return tiles.length;
     }
 
-    LimitingHeuristics(byte[][] solvedTiles) {
+    public LimitingHeuristics(byte[][] solvedTiles) {
         for (byte i = 0; i < solvedTiles.length; i++) {
             for (byte j = 0; j < solvedTiles[0].length; j++) {
                 solvedPositions.put(solvedTiles[i][j], new Position(i, j));
