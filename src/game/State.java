@@ -12,6 +12,8 @@ public class State {
     private byte[][] tiles;
     private double distance;
     private double cumulativeDistance = 0;
+    public String lastMove;
+    public int depth;
 
     public State(byte[][] tiles) {
         this.tiles = tiles;
@@ -23,6 +25,7 @@ public class State {
                 }
             }
         }
+        depth = 0;
     }
 
     private State(byte[][] tiles, Position zeroTilePosition, State parent) {
@@ -30,8 +33,18 @@ public class State {
         this.tiles = tiles;
         this.distance = Config.metrics.getDistance(tiles);
         this.cumulativeDistance = parent.getCumulativeDistance() + distance;
-
+        this.depth = parent.depth+1;
         this.zeroTilePosition = zeroTilePosition;
+    }
+    
+    private State(byte[][] tiles, Position zeroTilePosition, State parent, String lastMove) {
+        this.parent = parent;
+        this.tiles = tiles;
+        this.distance = Config.metrics.getDistance(tiles);
+        this.cumulativeDistance = parent.getCumulativeDistance() + distance;
+        this.depth = parent.depth+1;
+        this.zeroTilePosition = zeroTilePosition;
+        this.lastMove = lastMove;
     }
 
     public byte[][] getTiles() {
@@ -49,7 +62,7 @@ public class State {
         for (int i = zeroTilePosition.x + 1; i < this.tiles.length; i++) {
             tmpTiles[i - 1][zeroTilePosition.y] = tmpTiles[i][zeroTilePosition.y];
             tmpTiles[i][zeroTilePosition.y] = 0;
-            states.add(new State(Util.copy2DArray(tmpTiles), new Position(i, zeroTilePosition.y), this));
+            states.add(new State(Util.copy2DArray(tmpTiles), new Position(i, zeroTilePosition.y), this, "D"));
             break;
         }
 
@@ -57,7 +70,7 @@ public class State {
         for (int i = zeroTilePosition.x - 1; i >= 0; i--) {
             tmpTiles[i + 1][zeroTilePosition.y] = tmpTiles[i][zeroTilePosition.y];
             tmpTiles[i][zeroTilePosition.y] = 0;
-            states.add(new State(Util.copy2DArray(tmpTiles), new Position(i, zeroTilePosition.y), this));
+            states.add(new State(Util.copy2DArray(tmpTiles), new Position(i, zeroTilePosition.y), this, "U"));
             break;
         }
 
@@ -65,7 +78,7 @@ public class State {
         for (int i = zeroTilePosition.y + 1; i < this.tiles.length; i++) {
             tmpTiles[zeroTilePosition.x][i - 1] = tmpTiles[zeroTilePosition.x][i];
             tmpTiles[zeroTilePosition.x][i] = 0;
-            states.add(new State(Util.copy2DArray(tmpTiles), new Position(zeroTilePosition.x, i), this));
+            states.add(new State(Util.copy2DArray(tmpTiles), new Position(zeroTilePosition.x, i), this, "R"));
             break;
         }
 
@@ -73,7 +86,7 @@ public class State {
         for (int i = zeroTilePosition.y - 1; i >= 0; i--) {
             tmpTiles[zeroTilePosition.x][i + 1] = tmpTiles[zeroTilePosition.x][i];
             tmpTiles[zeroTilePosition.x][i] = 0;
-            states.add(new State(Util.copy2DArray(tmpTiles), new Position(zeroTilePosition.x, i), this));
+            states.add(new State(Util.copy2DArray(tmpTiles), new Position(zeroTilePosition.x, i), this, "L"));
             break;
         }
         return states;
