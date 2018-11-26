@@ -26,8 +26,8 @@ public class State {
     }
 
     private State(byte[][] tiles, Position zeroTilePosition, State parent) {
-        this.parent = parent;
         this.tiles = tiles;
+        this.parent = parent;
         this.distance = Config.metrics.getDistance(tiles);
         this.cumulativeDistance = parent.getCumulativeDistance() + distance;
 

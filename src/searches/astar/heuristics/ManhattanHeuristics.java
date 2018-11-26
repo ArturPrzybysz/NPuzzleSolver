@@ -9,7 +9,7 @@ import java.util.Map;
 public class ManhattanHeuristics implements IHeuristics {
     private Map<Byte, Position> solvedPositions = new HashMap<>();
 
-    ManhattanHeuristics(byte[][] solvedTiles) {
+    public ManhattanHeuristics(byte[][] solvedTiles) {
         for (byte i = 0; i < solvedTiles.length; i++) {
             {
                 for (byte j = 0; j < solvedTiles[0].length; j++) {

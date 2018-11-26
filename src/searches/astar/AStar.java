@@ -1,10 +1,14 @@
 package searches.astar;
 
 import game.State;
+import searches.IPuzzleSolver;
 
 import java.util.*;
-public class AStar {
-    public static List<State> findBestPath(State initialState) throws Exception {
+
+import static java.util.Arrays.deepToString;
+
+public class AStar implements IPuzzleSolver {
+    public List<State> findBestPath(State initialState) throws Exception {
         Queue<State> openStates = new PriorityQueue<>((s1, s2) -> {
             if (s1.getCumulativeDistance() - s2.getCumulativeDistance() == 0) {
                 return 0;
@@ -15,35 +19,24 @@ public class AStar {
             }
         });
 
-        Set<Integer> closedStatesHashes = new HashSet<>();
+        Set<String> closedStatesHashes = new HashSet<>();
         openStates.add(initialState);
 
         while (openStates.size() != 0) {
             State currentState = openStates.poll();
 
-            if (closedStatesHashes.contains(Arrays.deepHashCode(currentState.getTiles()))) {
+            if (closedStatesHashes.contains(deepToString(currentState.getTiles()))) {
                 continue;
             }
 
             if (currentState.getDistance() == 0) {
-                return reconstructPath(currentState);
+                return IPuzzleSolver.reconstructPath(currentState);
             }
 
-            closedStatesHashes.add(Arrays.deepHashCode(currentState.getTiles()));
+            closedStatesHashes.add(deepToString(currentState.getTiles()));
             openStates.addAll(currentState.getAvailableStates());
         }
         throw new Exception("No solution found");
-    }
-
-    private static List<State> reconstructPath(State state) {
-        List<State> path = new ArrayList<>();
-        State currentState = state;
-
-        do {
-            path.add(currentState);
-            currentState = currentState.getParent();
-        } while (currentState != null);
-        return path;
     }
 
 }

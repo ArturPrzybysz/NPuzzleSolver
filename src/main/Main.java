@@ -3,19 +3,24 @@ package main;
 import game.BoardState;
 import game.State;
 import game.TileGenerator;
+import searches.IPuzzleSolver;
 import searches.astar.AStar;
+import searches.depth.DepthFirstSearch;
+import searches.width.WidthFirstSearch;
 
 import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
         State initialState = new State(TileGenerator.generate(BoardState.RANDOM));
-        System.out.println("Initial");
-        Main.printTiles(initialState.getTiles());
 
+        Main.printTiles(initialState.getTiles());
+//        IPuzzleSolver solver = new AStar();
+        IPuzzleSolver solver = new DepthFirstSearch();
+//        IPuzzleSolver solver = new WidthFirstSearch();
         List<State> solution = null;
         try {
-            solution = AStar.findBestPath(initialState);
+            solution = solver.findBestPath(initialState);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -27,13 +32,12 @@ public class Main {
     }
 
     private static void printTiles(byte[][] tiles) {
-        for (int i = 0; i < tiles.length; i++) {
+        for (byte[] tile : tiles) {
             for (int j = 0; j < tiles[0].length; j++) {
-                System.out.print(tiles[i][j] + " ");
+                System.out.print(tile[j] + " ");
             }
             System.out.println();
         }
         System.out.println();
-
     }
 }
