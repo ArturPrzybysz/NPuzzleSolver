@@ -1,14 +1,17 @@
 package searches.astar;
 
 import game.State;
+import main.Main;
 import searches.IPuzzleSolver;
-
-import java.util.*;
 
 import static java.util.Arrays.deepToString;
 
+import java.util.*;
+
 public class AStar implements IPuzzleSolver {
-    public List<State> findBestPath(State initialState) throws Exception {
+    private int checkedCtr = 0, processedCtr = 0, recursiveDepth = 0;
+
+    public List<State> findBestPath(State initialState) {
         Queue<State> openStates = new PriorityQueue<>((s1, s2) -> {
             if (s1.getCumulativeDistance() - s2.getCumulativeDistance() == 0) {
                 return 0;
@@ -24,19 +27,35 @@ public class AStar implements IPuzzleSolver {
 
         while (openStates.size() != 0) {
             State currentState = openStates.poll();
+            processedCtr++;
+            recursiveDepth = Math.max(recursiveDepth, currentState.depth);
 
             if (closedStatesHashes.contains(deepToString(currentState.getTiles()))) {
                 continue;
             }
 
             if (currentState.getDistance() == 0) {
+                checkedCtr = closedStatesHashes.size();
                 return IPuzzleSolver.reconstructPath(currentState);
             }
 
             closedStatesHashes.add(deepToString(currentState.getTiles()));
-            openStates.addAll(currentState.getAvailableStates());
+
+            List<State> availableStates = currentState.getAvailableStates();
+            openStates.addAll(availableStates);
         }
-        throw new Exception("No solution found");
+        return null;
     }
 
+    public int getCheckedCtr() {
+        return checkedCtr;
+    }
+
+    public int getProcessedCtr() {
+        return processedCtr;
+    }
+
+    public int getRecursiveDepth() {
+        return recursiveDepth;
+    }
 }

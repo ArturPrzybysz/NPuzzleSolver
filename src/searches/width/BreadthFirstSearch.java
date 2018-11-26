@@ -1,4 +1,4 @@
-package searches.depth;
+package searches.width;
 
 import game.State;
 import searches.IPuzzleSolver;
@@ -7,17 +7,17 @@ import java.util.*;
 
 import static java.util.Arrays.deepToString;
 
-public class DepthFirstSearch implements IPuzzleSolver {
+public class BreadthFirstSearch implements IPuzzleSolver {
     private int checkedCtr = 0, processedCtr = 0, recursiveDepth = 0;
 
     @Override
     public List<State> findBestPath(State initialState) {
         Set<String> closedStatesHashes = new HashSet<>();
-        Stack<State> openStates = new Stack<>();
-        openStates.push(initialState);
+        Queue<State> openStates = new LinkedList<>();
+        openStates.add(initialState);
 
         while (openStates.size() != 0) {
-            State currentState = openStates.pop();
+            State currentState = openStates.poll();
             recursiveDepth = Math.max(recursiveDepth, currentState.depth);
             processedCtr++;
 

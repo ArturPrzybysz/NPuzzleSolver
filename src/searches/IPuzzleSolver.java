@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IPuzzleSolver {
-    public List<State> findBestPath(State initialState) throws Exception;
+    List<State> findBestPath(State initialState) throws Exception;
 
     static List<State> reconstructPath(State state) {
         List<State> path = new ArrayList<>();
@@ -18,4 +18,12 @@ public interface IPuzzleSolver {
         } while (currentState != null);
         return path;
     }
+
+    int getCheckedCtr();
+
+    int getProcessedCtr();
+
+    int getRecursiveDepth();
+
+
 }

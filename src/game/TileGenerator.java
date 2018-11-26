@@ -1,6 +1,5 @@
 package game;
 
-import game.BoardState;
 import main.Config;
 
 import java.util.List;

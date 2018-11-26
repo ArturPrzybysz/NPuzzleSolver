@@ -10,7 +10,7 @@ import java.util.Map;
 public class OvereagerHeuristics implements IHeuristics {
     private Map<Byte, Position> solvedPositions = new HashMap<>();
 
-    OvereagerHeuristics(byte[][] solvedTiles) {
+    public OvereagerHeuristics(byte[][] solvedTiles) {
         for (byte i = 0; i < solvedTiles.length; i++) {
             {
                 for (byte j = 0; j < solvedTiles[0].length; j++) {

@@ -25,6 +25,7 @@ public class ManhattanHeuristics implements IHeuristics {
         Position goalPosition;
         for (byte i = 0; i < tiles.length; i++) {
             for (byte j = 0; j < tiles[0].length; j++) {
+            	if(tiles[i][j] == 0) continue;
                 goalPosition = solvedPositions.get(tiles[i][j]);
                 distance += Math.abs(goalPosition.x - i);
                 distance += Math.abs(goalPosition.y - j);
