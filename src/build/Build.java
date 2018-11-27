@@ -10,7 +10,6 @@ import java.util.List;
 
 import game.State;
 import searches.IPuzzleSolver;
-import searches.astar.AStar;
 
 public class Build {
 
@@ -51,16 +50,14 @@ public class Build {
             if (solution == null)
                 out.println(-1);
             else {
-                String moves = "";
+                StringBuilder moves = new StringBuilder();
                 out.println(solution.size() - 1);
                 for (State state : solution) {
-                    if (state.lastMove != null)
-                        moves = state.lastMove + moves;
+                    if (state.lastDirection != null)
+                        moves.insert(0, state.lastDirection);
                 }
                 out.print(moves);
             }
-
-            out.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -80,7 +77,5 @@ public class Build {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
     }
-
 }

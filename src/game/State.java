@@ -12,12 +12,12 @@ public class State {
     private byte[][] tiles;
     private double distance;
     private double cumulativeDistance = 0;
-    public String lastMove;
+    public char lastDirection;
     public int depth = 0;
 
     public State(byte[][] tiles) {
         this.tiles = tiles;
-        this.distance = Config.metrics.getDistance(this.tiles);
+        this.distance = Config.heuristics.getDistance(this.tiles);
         for (short i = 0; i < tiles.length; i++) {
             for (short j = 0; j < tiles[0].length; j++) {
                 if (tiles[i][j] == 0) {
@@ -27,23 +27,14 @@ public class State {
         }
     }
 
-    private State(byte[][] tiles, Position zeroTilePosition, State parent) {
-        this.tiles = tiles;
+    private State(byte[][] tiles, Position zeroTilePosition, State parent, char lastDirection) {
         this.parent = parent;
-        this.distance = Config.metrics.getDistance(tiles);
+        this.tiles = tiles;
+        this.distance = Config.heuristics.getDistance(tiles);
         this.cumulativeDistance = parent.getCumulativeDistance() + distance;
         this.depth = parent.depth + 1;
         this.zeroTilePosition = zeroTilePosition;
-    }
-
-    private State(byte[][] tiles, Position zeroTilePosition, State parent, String lastMove) {
-        this.parent = parent;
-        this.tiles = tiles;
-        this.distance = Config.metrics.getDistance(tiles);
-        this.cumulativeDistance = parent.getCumulativeDistance() + distance;
-        this.depth = parent.depth + 1;
-        this.zeroTilePosition = zeroTilePosition;
-        this.lastMove = lastMove;
+        this.lastDirection = lastDirection;
     }
 
     public byte[][] getTiles() {
@@ -57,38 +48,66 @@ public class State {
     public List<State> getAvailableStates() {
 
         List<State> states = new ArrayList<>();
-        byte[][] tmpTiles = Util.copy2DArray(tiles);
-        for (int i = zeroTilePosition.x + 1; i < this.tiles.length; i++) {
-            tmpTiles[i - 1][zeroTilePosition.y] = tmpTiles[i][zeroTilePosition.y];
-            tmpTiles[i][zeroTilePosition.y] = 0;
-            states.add(new State(Util.copy2DArray(tmpTiles), new Position(i, zeroTilePosition.y), this, "D"));
-            break;
-        }
+        for (int i = 0; i < Config.order.length(); i++) {
+            byte[][] tmpTiles = Util.copy2DArray(tiles);
 
-        tmpTiles = Util.copy2DArray(tiles);
-        for (int i = zeroTilePosition.x - 1; i >= 0; i--) {
-            tmpTiles[i + 1][zeroTilePosition.y] = tmpTiles[i][zeroTilePosition.y];
-            tmpTiles[i][zeroTilePosition.y] = 0;
-            states.add(new State(Util.copy2DArray(tmpTiles), new Position(i, zeroTilePosition.y), this, "U"));
-            break;
-        }
-
-        tmpTiles = Util.copy2DArray(tiles);
-        for (int i = zeroTilePosition.y + 1; i < this.tiles.length; i++) {
-            tmpTiles[zeroTilePosition.x][i - 1] = tmpTiles[zeroTilePosition.x][i];
-            tmpTiles[zeroTilePosition.x][i] = 0;
-            states.add(new State(Util.copy2DArray(tmpTiles), new Position(zeroTilePosition.x, i), this, "R"));
-            break;
-        }
-
-        tmpTiles = Util.copy2DArray(tiles);
-        for (int i = zeroTilePosition.y - 1; i >= 0; i--) {
-            tmpTiles[zeroTilePosition.x][i + 1] = tmpTiles[zeroTilePosition.x][i];
-            tmpTiles[zeroTilePosition.x][i] = 0;
-            states.add(new State(Util.copy2DArray(tmpTiles), new Position(zeroTilePosition.x, i), this, "L"));
-            break;
+            switch (Config.order.charAt(i)) {
+                case 'L':
+                    if (lastDirection == 'R') {
+                        continue;
+                    }
+                    states.add(moveLeft(tmpTiles));
+                    break;
+                case 'R':
+                    if (lastDirection == 'L') {
+                        continue;
+                    }
+                    states.add(moveRight(tmpTiles));
+                    break;
+                case 'U':
+                    if (lastDirection == 'D') {
+                        continue;
+                    }
+                    states.add(moveUp(tmpTiles));
+                    break;
+                case 'D':
+                    if (lastDirection == 'U') {
+                        continue;
+                    }
+                    states.add(moveDown(tmpTiles));
+                    break;
+            }
         }
         return states;
+    }
+
+
+    private State moveLeft(byte[][] tiles) {
+        int i = zeroTilePosition.x - 1;
+        tiles[i - 1][zeroTilePosition.y] = tiles[i][zeroTilePosition.y];
+        tiles[i][zeroTilePosition.y] = 0;
+        return new State(Util.copy2DArray(tiles), new Position(i, zeroTilePosition.y), this, 'L');
+    }
+
+    private State moveRight(byte[][] tiles) {
+        int i = zeroTilePosition.x + 1;
+        tiles[i - 1][zeroTilePosition.y] = tiles[i][zeroTilePosition.y];
+        tiles[i][zeroTilePosition.y] = 0;
+        return new State(Util.copy2DArray(tiles), new Position(i, zeroTilePosition.y), this, 'R');
+    }
+
+    private State moveDown(byte[][] tiles) {
+        int i = zeroTilePosition.y + 1;
+        tiles[zeroTilePosition.x][i - 1] = tiles[zeroTilePosition.y][i];
+        tiles[i][zeroTilePosition.y] = 0;
+        return new State(Util.copy2DArray(tiles), new Position(i, zeroTilePosition.y), this, 'D');
+    }
+
+    private State moveUp(byte[][] tiles) {
+        int i = zeroTilePosition.y - 1;
+        tiles[zeroTilePosition.x][i + 1] = tiles[zeroTilePosition.y][i];
+        tiles[i][zeroTilePosition.y] = 0;
+        return new State(Util.copy2DArray(tiles), new Position(i, zeroTilePosition.y), this, 'U');
     }
 
     public State getParent() {

@@ -26,7 +26,6 @@ public class LimitingHeuristics implements IHeuristics {
             for (byte j = 0; j < solvedTiles[0].length; j++) {
                 solvedPositions.put(solvedTiles[i][j], new Position(i, j));
             }
-
         }
     }
 

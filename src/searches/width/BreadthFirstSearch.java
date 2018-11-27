@@ -8,6 +8,7 @@ import java.util.*;
 import static java.util.Arrays.deepToString;
 
 public class BreadthFirstSearch implements IPuzzleSolver {
+
     private int checkedCtr = 0, processedCtr = 0, recursiveDepth = 0;
 
     @Override

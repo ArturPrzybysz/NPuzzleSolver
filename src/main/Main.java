@@ -19,8 +19,8 @@ public class Main {
 
         State initialState = new State(Build.tiles);
 
-        IPuzzleSolver solver = SolverFactory.getSolver(Build.strategy);
-//        IPuzzleSolver solver = new BreadthFirstSearch();
+        IPuzzleSolver solver = SolverFactory.getSolver(Build.strategy, Build.strategyParameter);
+
         List<State> solution = null;
         long startTime = System.nanoTime();
         try {
