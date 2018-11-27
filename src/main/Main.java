@@ -24,7 +24,7 @@ public class Main {
         List<State> solution = null;
         long startTime = System.nanoTime();
         try {
-            solution = solver.findBestPath(initialState);
+            solution = solver.findPath(initialState);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -39,10 +39,10 @@ public class Main {
 
     }
 
-    public static void printTiles(byte[][] tiles) {
-        for (int i = 0; i < tiles.length; i++) {
+    private static void printTiles(byte[][] tiles) {
+        for (byte[] tile : tiles) {
             for (int j = 0; j < tiles[0].length; j++) {
-                System.out.print(tiles[i][j] + " ");
+                System.out.print(tile[j] + " ");
             }
             System.out.println();
         }

@@ -9,6 +9,7 @@ import java.io.PrintWriter;
 import java.util.List;
 
 import game.State;
+import main.Config;
 import searches.IPuzzleSolver;
 
 public class Build {
@@ -32,6 +33,8 @@ public class Build {
         BufferedReader br = new BufferedReader(new FileReader(initialStateFile));
         String st = br.readLine();
         String[] size = st.split(" ");
+        Config.width = Integer.parseInt(size[0]);
+        Config.height = Integer.parseInt(size[1]);
         tiles = new byte[Integer.parseInt(size[0])][Integer.parseInt(size[1])];
         int j = 0, i = 0;
         while ((st = br.readLine()) != null) {
@@ -53,7 +56,7 @@ public class Build {
                 StringBuilder moves = new StringBuilder();
                 out.println(solution.size() - 1);
                 for (State state : solution) {
-                    if (state.lastDirection != null)
+                    if (state.lastDirection != ' ')
                         moves.insert(0, state.lastDirection);
                 }
                 out.print(moves);

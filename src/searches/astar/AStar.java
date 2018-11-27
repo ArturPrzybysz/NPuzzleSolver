@@ -11,7 +11,7 @@ import java.util.*;
 public class AStar implements IPuzzleSolver {
     private int checkedCtr = 0, processedCtr = 0, recursiveDepth = 0;
 
-    public List<State> findBestPath(State initialState) {
+    public List<State> findPath(State initialState) {
         Queue<State> openStates = new PriorityQueue<>((s1, s2) -> {
             if (s1.getCumulativeDistance() - s2.getCumulativeDistance() == 0) {
                 return 0;

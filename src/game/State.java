@@ -12,7 +12,7 @@ public class State {
     private byte[][] tiles;
     private double distance;
     private double cumulativeDistance = 0;
-    public char lastDirection;
+    public char lastDirection = ' ';
     public int depth = 0;
 
     public State(byte[][] tiles) {

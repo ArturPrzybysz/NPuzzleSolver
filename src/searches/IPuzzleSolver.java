@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IPuzzleSolver {
-    List<State> findBestPath(State initialState) throws Exception;
+    List<State> findPath(State initialState) throws Exception;
 
     static List<State> reconstructPath(State state) {
         List<State> path = new ArrayList<>();

@@ -12,7 +12,7 @@ public class BreadthFirstSearch implements IPuzzleSolver {
     private int checkedCtr = 0, processedCtr = 0, recursiveDepth = 0;
 
     @Override
-    public List<State> findBestPath(State initialState) {
+    public List<State> findPath(State initialState) {
         Set<String> closedStatesHashes = new HashSet<>();
         Queue<State> openStates = new LinkedList<>();
         openStates.add(initialState);

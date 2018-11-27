@@ -3,7 +3,6 @@ package searches;
 import main.Config;
 import searches.astar.AStar;
 import searches.astar.heuristics.HeuristicsFabric;
-import searches.astar.heuristics.IHeuristics;
 import searches.depth.DepthFirstSearch;
 import searches.width.BreadthFirstSearch;
 
@@ -11,9 +10,11 @@ public class SolverFactory {
     public static IPuzzleSolver getSolver(String solverName, String strategyParameter) {
         switch (solverName) {
             case "dfs":
-                return new DepthFirstSearch(strategyParameter);
+                Config.order = strategyParameter;
+                return new DepthFirstSearch();
             case "bfs":
-                return new BreadthFirstSearch(strategyParameter);
+                Config.order = strategyParameter;
+                return new BreadthFirstSearch();
             case "astr":
                 try {
                     Config.heuristics = HeuristicsFabric.get(strategyParameter);

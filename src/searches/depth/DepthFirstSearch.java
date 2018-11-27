@@ -11,7 +11,7 @@ public class DepthFirstSearch implements IPuzzleSolver {
     private int checkedCtr = 0, processedCtr = 0, recursiveDepth = 0;
 
     @Override
-    public List<State> findBestPath(State initialState) {
+    public List<State> findPath(State initialState) {
         Set<String> closedStatesHashes = new HashSet<>();
         Stack<State> openStates = new Stack<>();
         openStates.push(initialState);

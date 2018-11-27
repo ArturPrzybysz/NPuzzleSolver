@@ -9,7 +9,7 @@ import static java.lang.Math.random;
 public class TileGenerator {
     public static byte[][] generate(BoardState boardState) {
         int size = Config.size;
-        byte[][] tiles = new byte[size][size];
+        byte[][] tiles = new byte[Config.width][Config.height];
         switch (boardState) {
             case CUSTOM:
                 tiles = new byte[][]{
@@ -20,16 +20,13 @@ public class TileGenerator {
                 break;
             case SOLVED:
                 byte tileNumber = 1;
-                for (byte i = 0; i < size; i++) {
-                    for (byte j = 0; j < size; j++) {
-                        if (i == size - 1 && j == size - 1) {
-                            tiles[i][j] = 0;
-                        } else {
-                            tiles[i][j] = tileNumber;
-                        }
+                for (byte i = 0; i < Config.width; i++) {
+                    for (byte j = 0; j < Config.height; j++) {
+                        tiles[i][j] = tileNumber;
                         tileNumber++;
                     }
                 }
+                tiles[Config.width - 1][Config.height - 1] = 0;
                 break;
             case RANDOM:
                 List<State> states = new State(Config.solvedTiles).getAvailableStates();
