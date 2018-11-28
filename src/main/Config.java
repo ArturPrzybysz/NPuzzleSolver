@@ -2,17 +2,21 @@ package main;
 
 import game.BoardState;
 import game.TileGenerator;
-import searches.astar.heuristics.HammingHeuristic;
 import searches.astar.heuristics.IHeuristics;
-import searches.astar.heuristics.LimitingHeuristics;
-import searches.astar.heuristics.SnakeHeuristic;
+import searches.astar.heuristics.ManhattanHeuristics;
 
 public class Config {
-    public static int size = 4;
-    public static byte[][] solvedTiles = TileGenerator.generate(BoardState.SOLVED);
-    //public static searches.astar.heuristics.IHeuristics metrics = new searches.astar.heuristics.OvereagerHeuristics(solvedTiles);
-    // public static IHeuristics metrics = new LimitingHeuristics(solvedTiles);
-    public static IHeuristics metrics = new SnakeHeuristic(solvedTiles);
-    //public static searches.astar.heuristics.IHeuristics metrics = new searches.astar.heuristics.ManhattanHeuristics(solvedTiles);
-    //public static IHeuristics metrics = new HammingHeuristic(solvedTiles);
+    static {
+        width = 4;
+        height = 4;
+        solvedTiles = TileGenerator.generate(BoardState.SOLVED);
+        heuristics = new ManhattanHeuristics(Config.solvedTiles);
+    }
+
+    public static int size;
+    public static int width;
+    public static int height;
+    public static byte[][] solvedTiles;
+    public static IHeuristics heuristics;
+    public static String order;
 }
