@@ -1,4 +1,4 @@
-package searches.width;
+package searches.breadth;
 
 import game.State;
 import searches.IPuzzleSolver;

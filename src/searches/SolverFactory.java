@@ -4,7 +4,7 @@ import main.Config;
 import searches.astar.AStar;
 import searches.astar.heuristics.HeuristicsFabric;
 import searches.depth.DepthFirstSearch;
-import searches.width.BreadthFirstSearch;
+import searches.breadth.BreadthFirstSearch;
 
 public class SolverFactory {
     public static IPuzzleSolver getSolver(String solverName, String strategyParameter) {

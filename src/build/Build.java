@@ -21,9 +21,6 @@ public class Build {
     public static String pathToSaveSolution;
     public static String pathToSaveInfo;
 
-    private void saveStrategy(String strategyName) {
-
-    }
 
     public static void loadArgs(String[] args) throws IOException {
         strategy = args[0];
