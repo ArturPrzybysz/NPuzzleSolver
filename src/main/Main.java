@@ -16,10 +16,9 @@ public class Main {
         } catch (IOException e1) {
             e1.printStackTrace();
         }
-
+        IPuzzleSolver solver = SolverFactory.getSolver(Build.strategy, Build.strategyParameter);
         State initialState = new State(Build.tiles);
 
-        IPuzzleSolver solver = SolverFactory.getSolver(Build.strategy, Build.strategyParameter);
 
         List<State> solution = null;
         long startTime = System.nanoTime();

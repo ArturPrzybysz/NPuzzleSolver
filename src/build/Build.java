@@ -21,6 +21,10 @@ public class Build {
     public static String pathToSaveSolution;
     public static String pathToSaveInfo;
 
+    private void saveStrategy(String strategyName) {
+
+    }
+
     public static void loadArgs(String[] args) throws IOException {
         strategy = args[0];
         strategyParameter = args[1];
@@ -32,10 +36,12 @@ public class Build {
         File initialStateFile = new File(initialStatePath);
         BufferedReader br = new BufferedReader(new FileReader(initialStateFile));
         String st = br.readLine();
-        String[] size = st.split(" ");
-        Config.width = Integer.parseInt(size[0]);
-        Config.height = Integer.parseInt(size[1]);
-        tiles = new byte[Integer.parseInt(size[0])][Integer.parseInt(size[1])];
+        String[] tileDimensions = st.split(" ");
+        int tmp = Integer.parseInt(tileDimensions[0]);
+        Config.width = tmp;
+        tmp = Integer.parseInt(tileDimensions[1]);
+        Config.height = tmp;
+        tiles = new byte[Config.width][Config.height];
         int j = 0, i = 0;
         while ((st = br.readLine()) != null) {
             String[] fileValues = st.split(" ");

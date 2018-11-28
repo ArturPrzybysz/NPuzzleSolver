@@ -22,6 +22,7 @@ public class State {
             for (short j = 0; j < tiles[0].length; j++) {
                 if (tiles[i][j] == 0) {
                     this.zeroTilePosition = new Position(i, j);
+                    break;
                 }
             }
         }
@@ -50,47 +51,52 @@ public class State {
         List<State> states = new ArrayList<>();
         for (int i = 0; i < Config.order.length(); i++) {
             byte[][] tmpTiles = Util.copy2DArray(tiles);
-
+            State newState;
             switch (Config.order.charAt(i)) {
                 case 'L':
-                    if (lastDirection == 'R') {
-                        continue;
-                    }
-                    states.add(moveLeft(tmpTiles));
+                    if (lastDirection == 'R') continue;
+                    newState = moveLeft(tmpTiles);
+                    if (newState != null)
+                        states.add(newState);
                     break;
                 case 'R':
-                    if (lastDirection == 'L') {
-                        continue;
-                    }
-                    states.add(moveRight(tmpTiles));
+                    if (lastDirection == 'L') continue;
+                    newState = moveRight(tmpTiles);
+                    if (newState != null)
+                        states.add(newState);
                     break;
                 case 'U':
-                    if (lastDirection == 'D') {
-                        continue;
-                    }
-                    states.add(moveUp(tmpTiles));
+                    if (lastDirection == 'D') continue;
+
+                    newState = moveUp(tmpTiles);
+                    if (newState != null)
+                        states.add(newState);
                     break;
                 case 'D':
-                    if (lastDirection == 'U') {
-                        continue;
-                    }
-                    states.add(moveDown(tmpTiles));
+                    if (lastDirection == 'U') continue;
+
+                    newState = moveDown(tmpTiles);
+                    if (newState != null)
+                        states.add(newState);
                     break;
             }
         }
         return states;
     }
 
-
     private State moveLeft(byte[][] tiles) {
         int i = zeroTilePosition.x - 1;
-        tiles[i - 1][zeroTilePosition.y] = tiles[i][zeroTilePosition.y];
+        if (i - 1 < 0) return null;
+
+        tiles[i + 1][zeroTilePosition.y] = tiles[i][zeroTilePosition.y];
         tiles[i][zeroTilePosition.y] = 0;
         return new State(Util.copy2DArray(tiles), new Position(i, zeroTilePosition.y), this, 'L');
     }
 
     private State moveRight(byte[][] tiles) {
         int i = zeroTilePosition.x + 1;
+        if (i > Config.width) return null;
+
         tiles[i - 1][zeroTilePosition.y] = tiles[i][zeroTilePosition.y];
         tiles[i][zeroTilePosition.y] = 0;
         return new State(Util.copy2DArray(tiles), new Position(i, zeroTilePosition.y), this, 'R');
@@ -98,6 +104,8 @@ public class State {
 
     private State moveDown(byte[][] tiles) {
         int i = zeroTilePosition.y + 1;
+        if (i > Config.height) return null;
+
         tiles[zeroTilePosition.x][i - 1] = tiles[zeroTilePosition.y][i];
         tiles[i][zeroTilePosition.y] = 0;
         return new State(Util.copy2DArray(tiles), new Position(i, zeroTilePosition.y), this, 'D');
@@ -105,6 +113,7 @@ public class State {
 
     private State moveUp(byte[][] tiles) {
         int i = zeroTilePosition.y - 1;
+        if (i < 0) return null;
         tiles[zeroTilePosition.x][i + 1] = tiles[zeroTilePosition.y][i];
         tiles[i][zeroTilePosition.y] = 0;
         return new State(Util.copy2DArray(tiles), new Position(i, zeroTilePosition.y), this, 'U');
