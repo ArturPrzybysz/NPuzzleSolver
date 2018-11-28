@@ -11,13 +11,13 @@ import searches.IPuzzleSolver;
 import searches.SolverFactory;
 
 public class GeneratorFrajdy {
-	
-	static String sourcePath1_7 = "C:\\Users\\Wojciech\\Desktop\\hehe\\";
-	static String outputPathDFS = "C:\\Users\\Wojciech\\Desktop\\heheout\\dfs\\";
-	static String outputPathBFS = "C:\\Users\\Wojciech\\Desktop\\heheout\\bfs\\";
-	static String outputPathMANH = "C:\\Users\\Wojciech\\Desktop\\heheout\\astar\\manh\\";
-	static String outputPathHAMM = "C:\\Users\\Wojciech\\Desktop\\heheout\\astar\\hamm\\";
-	static String outputPathYOLO = "C:\\Users\\Wojciech\\Desktop\\heheout\\astar\\yolo\\";
+	static String rootDir = "C:\\Users\\Wojciech\\Desktop";
+	static String sourcePath1_7 = rootDir + "\\hehe\\";
+	static String outputPathDFS = rootDir + "\\heheout\\dfs\\";
+	static String outputPathBFS = rootDir + "\\heheout\\bfs\\";
+	static String outputPathMANH = rootDir + "\\heheout\\astar\\manh\\";
+	static String outputPathHAMM = rootDir + "\\heheout\\astar\\hamm\\";
+	static String outputPathYOLO = rootDir + "\\heheout\\astar\\yolo\\";
 	
 	private static void ulusz(String[] args) {
 		try {
