@@ -1,5 +1,7 @@
 package searches;
 
+import game.BoardState;
+import game.TileGenerator;
 import main.Config;
 import searches.astar.AStar;
 import searches.astar.heuristics.HeuristicsFabric;
@@ -8,6 +10,8 @@ import searches.breadth.BreadthFirstSearch;
 
 public class SolverFactory {
     public static IPuzzleSolver getSolver(String solverName, String strategyParameter) {
+        Config.solvedTiles = TileGenerator.generate(BoardState.SOLVED);
+
         switch (solverName) {
             case "dfs":
                 Config.order = strategyParameter;

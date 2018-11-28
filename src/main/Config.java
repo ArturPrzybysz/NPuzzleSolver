@@ -7,10 +7,6 @@ import searches.astar.heuristics.ManhattanHeuristics;
 
 public class Config {
     static {
-        width = 4;
-        height = 4;
-        solvedTiles = TileGenerator.generate(BoardState.SOLVED);
-        heuristics = new ManhattanHeuristics(Config.solvedTiles);
         order = "LURD";
     }
 

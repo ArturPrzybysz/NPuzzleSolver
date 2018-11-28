@@ -2,6 +2,7 @@ package game;
 
 import main.Config;
 import main.Util;
+import searches.astar.heuristics.ManhattanHeuristics;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,9 @@ public class State {
 
     public State(byte[][] tiles) {
         this.tiles = tiles;
+        if (Config.heuristics == null) {
+            Config.heuristics = new ManhattanHeuristics(Config.solvedTiles);
+        }
         this.distance = Config.heuristics.getDistance(this.tiles);
         for (short i = 0; i < tiles.length; i++) {
             for (short j = 0; j < tiles[0].length; j++) {
@@ -47,7 +51,6 @@ public class State {
     }
 
     public List<State> getAvailableStates() {
-
         List<State> states = new ArrayList<>();
         for (int i = 0; i < Config.order.length(); i++) {
             byte[][] tmpTiles = Util.copy2DArray(tiles);
@@ -67,7 +70,6 @@ public class State {
                     break;
                 case 'U':
                     if (lastDirection == 'D') continue;
-
                     newState = moveUp(tmpTiles);
                     if (newState != null)
                         states.add(newState);

@@ -1,6 +1,7 @@
 package searches.depth;
 
 import game.State;
+import main.Main;
 import searches.IPuzzleSolver;
 
 import java.util.*;
@@ -18,6 +19,10 @@ public class DepthFirstSearch implements IPuzzleSolver {
 
         while (openStates.size() != 0) {
             State currentState = openStates.pop();
+            Main.printTiles(currentState.getTiles());
+
+            System.out.println(currentState.lastDirection + "\n");
+
             recursiveDepth = Math.max(recursiveDepth, currentState.depth);
             processedCtr++;
 

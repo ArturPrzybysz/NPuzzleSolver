@@ -38,7 +38,7 @@ public class Main {
 
     }
 
-    private static void printTiles(byte[][] tiles) {
+    public static void printTiles(byte[][] tiles) {
         for (byte[] tile : tiles) {
             for (int j = 0; j < tiles[0].length; j++) {
                 System.out.print(tile[j] + " ");

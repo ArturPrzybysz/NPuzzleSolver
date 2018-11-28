@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 
+import game.BoardState;
 import game.State;
+import game.TileGenerator;
 import main.Config;
 import searches.IPuzzleSolver;
 
@@ -34,12 +36,14 @@ public class Build {
         BufferedReader br = new BufferedReader(new FileReader(initialStateFile));
         String st = br.readLine();
         String[] tileDimensions = st.split(" ");
-        int tmp = Integer.parseInt(tileDimensions[0]);
-        Config.width = tmp;
-        tmp = Integer.parseInt(tileDimensions[1]);
-        Config.height = tmp;
+
+        Config.width = Integer.parseInt(tileDimensions[1]);
+        Config.height = Integer.parseInt(tileDimensions[0]);
+        Config.solvedTiles = TileGenerator.generate(BoardState.SOLVED);
+
         tiles = new byte[Config.width][Config.height];
         int j = 0, i = 0;
+
         while ((st = br.readLine()) != null) {
             String[] fileValues = st.split(" ");
             for (String fileValue : fileValues) {
