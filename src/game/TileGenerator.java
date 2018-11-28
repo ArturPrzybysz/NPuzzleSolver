@@ -8,7 +8,6 @@ import static java.lang.Math.random;
 
 public class TileGenerator {
     public static byte[][] generate(BoardState boardState) {
-        int size = Config.size;
         byte[][] tiles = new byte[Config.width][Config.height];
         switch (boardState) {
             case CUSTOM:

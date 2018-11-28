@@ -9,8 +9,8 @@ public class HeuristicsFabric {
 //                //TODO
             case "manh":
                 return new ManhattanHeuristics(Config.solvedTiles);
-            case "yolo":
-                return new OvereagerHeuristics(Config.solvedTiles);
+//            case "yolo":
+//                return new OvereagerHeuristics(Config.solvedTiles);
             default:
                 throw new Exception("No such heuristics");
         }

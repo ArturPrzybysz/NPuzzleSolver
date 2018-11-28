@@ -11,9 +11,9 @@ public class Config {
         height = 4;
         solvedTiles = TileGenerator.generate(BoardState.SOLVED);
         heuristics = new ManhattanHeuristics(Config.solvedTiles);
+        order = "LURD";
     }
 
-    public static int size;
     public static int width;
     public static int height;
     public static byte[][] solvedTiles;

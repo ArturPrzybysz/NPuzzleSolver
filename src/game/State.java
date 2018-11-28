@@ -108,7 +108,7 @@ public class State {
 
         tiles[zeroTilePosition.x][i - 1] = tiles[zeroTilePosition.x][i];
         tiles[zeroTilePosition.x][i] = 0;
-        return new State(Util.copy2DArray(tiles), new Position(i, zeroTilePosition.y), this, 'D');
+        return new State(Util.copy2DArray(tiles), new Position(zeroTilePosition.x, i), this, 'D');
     }
 
     private State moveUp(byte[][] tiles) {
@@ -116,7 +116,7 @@ public class State {
         if (i < 0) return null;
         tiles[zeroTilePosition.x][i + 1] = tiles[zeroTilePosition.x][i];
         tiles[zeroTilePosition.x][i] = 0;
-        return new State(Util.copy2DArray(tiles), new Position(i, zeroTilePosition.y), this, 'U');
+        return new State(Util.copy2DArray(tiles), new Position(zeroTilePosition.x, i), this, 'U');
     }
 
     public State getParent() {
